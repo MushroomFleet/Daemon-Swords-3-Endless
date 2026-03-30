@@ -130,76 +130,7 @@ Eight ZeroBytes-compatible systems work together:
 
 Download the latest MSI or NSIS installer from the releases. On first launch, the TTS engine downloads ~106 MB of voice assets automatically.
 
-### Development
-
-**Prerequisites:** Node.js 18+, Rust 1.77+, Cargo
-
-```bash
-# Clone the repository
-git clone https://github.com/MushroomFleet/daemon-swords-3-endless-dev.git
-cd daemon-swords-3-endless-dev
-
-# Install dependencies
-npm install
-
-# Run development server (browser only, no TTS)
-npm run dev
-
-# Run with Tauri backend (full TTS support)
-cargo tauri dev
-
-# Build for production (MSI + NSIS installers)
-cargo tauri build
-```
-
 ---
-
-## Technical Architecture
-
-### File Structure
-
-```
-App.tsx                     # Main game loop, rendering, UI (~4000 lines)
-types.ts                    # TypeScript interfaces (GameState, Entity, etc.)
-constants.ts                # Game constants (weapons, affinities, upgrades)
-constants/
-  procedural.ts             # Salt values, classes, rarities, room types
-utils/
-  gameUtils.ts              # Dungeon generation, entity spawning, collision
-  proceduralGen.ts          # Core PRNG, hashing, coordinate-to-content
-  zeroField.ts              # Corruption + affinity territory fields
-  zeroQuadratic.ts          # Pair hashing, enemy social bonds
-  zeroCubic.ts              # Triple hashing, triangle formations
-  puppetRuntime.ts          # Character rendering with color tinting
-  splineUtils.ts            # Attack trajectory calculations
-  audioSystem.ts            # SNES-style audio synthesis
-  ttsAudio.ts               # Web Audio API PCM playback for TTS
-speech/
-  index.ts                  # ZeroResponse public API (generateSpeech)
-  engine.ts                 # xxhash32 engine (shared with ZeroLogENH)
-  registry.ts               # Creature class -> profile map
-  types.ts                  # CreatureClass, ResponseProfile
-  profiles/                 # 7 JSON dialogue profiles
-voice/
-  index.ts                  # ZeroVoice public API (deriveVoiceSpec)
-  types.ts                  # VoiceSpec, GenderFilter
-zerolog/
-  index.ts                  # ZeroLog event capture (logEvent, insertChapter)
-  types.ts                  # EventType, LogEntry
-zerolog-enh/
-  index.ts                  # ZeroLogENH narrative engine (enhanceLog, enhanceEvent)
-  profile.ts                # Extended dungeon chronicle profile (17 event types)
-src-tauri/
-  src/
-    lib.rs                  # Tauri app entry, SessionState, command registration
-    zerovoice.rs            # Voice spec derivation (xxhash64, 26 voices)
-    arc_properties.rs       # Zero-Quadratic arc properties (symmetric pair hash)
-    slerp.rs                # Voice table loading, style vector interpolation
-    phonemize.rs            # eSpeak-NG phonemisation, Kokoro token mapping
-    kokoro_tts.rs           # ONNX session wrapper, synthesis pipeline
-    setup.rs                # First-run asset download (model, voices, eSpeak-NG)
-    commands/               # Tauri IPC command handlers
-```
 
 ### ZeroBytes Salt Allocation
 
@@ -349,3 +280,24 @@ MIT License — See LICENSE file for details
 *Enter a seed. Explore forever. Download your story.*
 
 </div>
+
+## 📚 Citation
+
+### Academic Citation
+
+If you use this codebase in your research or project, please cite:
+
+```bibtex
+@software{daemon_swords_3_endless,
+  title = {Daemon Swords 3 Endless: you play as a sentient daemon blade seeking hosts to possess and enemies to slay. Every room, enemy, voice, dialogue line, and adventure chronicle entry is deterministically generated from world coordinates using the ZeroBytes family},
+  author = {[Drift Johnson]},
+  year = {2025},
+  url = {https://github.com/MushroomFleet/Daemon-Swords-3-Endless},
+  version = {1.0.0}
+}
+```
+
+### Donate:
+
+
+[![Ko-Fi](https://cdn.ko-fi.com/cdn/kofi3.png?v=3)](https://ko-fi.com/driftjohnson)
